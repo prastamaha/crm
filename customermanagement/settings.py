@@ -44,12 +44,19 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    # -------------- HEROKU ADDON --------------
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # ------------------------------------------
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
 ]
 
 ROOT_URLCONF = 'customermanagement.urls'
@@ -91,6 +98,13 @@ DATABASES = {
         # 'PORT': '5432',         # DATABASE PORT
     }
 }
+# YOU CAN LOOK FOR HEROKU CREDENTIAL DATABASE TO COMPLETE THE ABOVE VARIABLES
+# OR YOU CAN USE HEROKU WAY LIKE BELOW USING dj_database_url
+
+# HEROKU WAY TO CONNECT HEROKU POSTGRES DATABASES (pip install dj_database_url)
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -150,4 +164,8 @@ EMAIL_HOST_USER = 'youremail@gmail.com'
 EMAIL_HOST_PASSWORD = 'yourpassword'
 
 # HEROKU CONFIG
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# FORCE HTTPS FOR HEROKU
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
