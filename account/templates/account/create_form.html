@@ -1,0 +1,20 @@
+{% extends 'account/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block navbar %}
+    {% include 'account/navbar.html' %}
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="m-4">
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-outline-success">Create</button>
+</form>
+
+</div>
+
+{% endblock content %}

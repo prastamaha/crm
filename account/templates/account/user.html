@@ -1,0 +1,86 @@
+{% extends 'account/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+{% endblock css %}
+
+{% block navbar %}
+    {% include 'account/navbar.html' %}
+{% endblock navbar %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="total-orders">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Total Orders</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{ orders.count }}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="orders-delivered">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Orders Delivered</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{ orders_delivered }}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="orders-pending">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Orders Pending</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{ orders_pending }}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="m-3">
+    <h5>ORDER</h5>
+    <hr>
+    <div class="card card-body">
+    <table class="table table-sm">
+        <tr>
+        <th>Product</th>
+        <th>Date Orderd</th>
+        <th>Status</th>
+        <th>Update</th>
+        <th>Remove</th>
+        </tr>
+    
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.product }}</td>
+            <td>{{ order.date_created }}</td>
+            <td>{{ order.status }}</td>
+            <td><a href="{% url 'update_order' order.id %}" class="btn btn-outline-info">Update</a></td>
+            <td><a href="{% url 'delete_order' order.id %}" class="btn btn-outline-danger">Remove</a></td>
+        </tr>
+        {% endfor %}
+
+        
+    </table>
+</div>
+<a class="btn btn-primary mt-4" href="{% url 'create_order' customer.id %}">Create Order</a>
+
+{% endblock content %}
